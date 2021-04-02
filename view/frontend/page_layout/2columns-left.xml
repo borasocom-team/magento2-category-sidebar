@@ -10,7 +10,7 @@
 
     <referenceContainer name="columns">
         <referenceContainer name="sidebar.main">
-            <block class="Sebwite\Sidebar\Block\Sidebar" name="category-sidebar" template="Sebwite_Sidebar::sidebar.phtml"/>
+            <block class="Sebwite\Sidebar\Block\Sidebar" name="category-sidebar" template="Sebwite_Sidebar::sidebar.phtml" before="-"/>
         </referenceContainer>
     </referenceContainer>
 </layout>

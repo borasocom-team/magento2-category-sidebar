@@ -15,20 +15,28 @@ function renderCategoryListElement($block, $category, $maxLevel, $level = 0)
     $isActive = $block->isCurrentCategoryOrParentOfCurrentCategory($category);
     $isCurrent = $block->isCurrentCategory($category);
 
-    $html = '<li class="level' . $level . ($isActive ? ' active' : '') . '">';
-    $html .= '<a href="' . $block->getCategoryUrl($category) . '" title="' . $category->getName() . '" class="' . ($isActive ? 'is-active' : '') . ' ' . ($isCurrent ? 'is-current' : '') . '">' . $category->getName() . '</a>';
+    $productCount = $block->getProductCollectionCount($category);
 
-    if ($category->hasChildren() && $level < $maxLevel) {
-        if ($isActive) {
-            $html .= '<span class="expanded"><i class="fa fa-minus"></i></span>';
-        } else {
-            $html .= '<span class="expand"><i class="fa fa-plus"></i></span>';
+    $html = '';
+
+    if($productCount > 0) {
+        $html .= '<li class="level' . $level . ($isActive ? ' active' : '') . '">';
+        $html .= '<a href="' . $block->getCategoryUrl($category) . '" title="' . $category->getName() . '" class="' . ($isActive ? 'is-active' : '') . ' ' . ($isCurrent ? 'is-current' : '') . '">' . $category->getName() .' <span class="count">'.$productCount . '</span></a>';
+
+        if ($category->hasChildren() && $level < $maxLevel) {
+            if ($isActive) {
+                $html .= '<span class="expanded"><i class="fa fa-minus"></i></span>';
+            } else {
+                $html .= '<span class="expand"><i class="fa fa-plus"></i></span>';
+            }
+
+            $html .= renderCategoryChildren($block, $category, $maxLevel, $level + 1);
         }
 
-        $html .= renderCategoryChildren($block, $category, $maxLevel, $level + 1);
+        $html .= '</li>';
     }
 
-    $html .= '</li>';
+
 
     return $html;
 }

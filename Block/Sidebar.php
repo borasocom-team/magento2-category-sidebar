@@ -280,4 +280,15 @@ class Sidebar extends Template
     {
         return $this->_dataHelper->isOpenOnLoad();
     }
+
+    public function getProductCollectionCount($category){
+
+        $productCount = $category->getProductCollection()
+            ->setVisibility(array(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH, \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG))
+            ->addFieldToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+            ->count();
+
+        return $productCount;
+
+    }
 }
