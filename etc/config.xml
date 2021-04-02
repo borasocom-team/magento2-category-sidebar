@@ -4,6 +4,7 @@
 		<sidebar>
 			<general>
 				<enabled>1</enabled>
+				<category>current_category_children_or_siblings</category>
 				<categorydepth>1</categorydepth>
 			</general>
 		</sidebar>

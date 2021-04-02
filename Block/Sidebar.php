@@ -110,6 +110,20 @@ class Sidebar extends Template
             ->getChildrenCategories()
             ->getItems();
 
+        if($this->_dataHelper->getSidebarCategory() == 'current_category_children_or_siblings') {
+            if(count($categories) == 0) {
+                $currentCategoryPath = $currentCategory->getPath();
+                $parentId = $currentCategoryPath ? getParentIdFromCategoryPath($currentCategoryPath) : null;
+
+                if ($parentId && $parentId > 2) {
+                    $categories = ($collection->getItems()[$parentId])->getChildrenCategories()
+                        ->getItems();
+
+                }
+            }
+
+        }
+
         if ($this->_dataHelper->getSidebarCategory() == 'current_category_parent_siblings_and_children') {
             if (!$currentCategory) {
                 $categories = [];
@@ -146,7 +160,7 @@ class Sidebar extends Template
     {
         $sidebarCategory = $this->_dataHelper->getSidebarCategory();
 
-        if ($sidebarCategory == 'current_category_children') {
+        if ($sidebarCategory == 'current_category_children' || $sidebarCategory == 'current_category_children_or_siblings') {
             $currentCategory = $this->_coreRegistry->registry('current_category');
             if ($currentCategory) {
                 return $currentCategory->getId();
